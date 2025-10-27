@@ -1,0 +1,7 @@
+// minimal root build.gradle
+buildscript {
+  repositories { mavenCentral() }
+}
+allprojects {
+  repositories { mavenCentral() }
+}
