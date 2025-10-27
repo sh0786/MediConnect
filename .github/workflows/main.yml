@@ -1,4 +1,4 @@
-woname: Build MediConnect APK
+name: Build Android APK
 
 on:
   push:
@@ -11,32 +11,19 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Set up JDK 17
+    - uses: actions/checkout@v4
+    
+    - name: Set up Java
       uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
         java-version: '17'
         
-    - name: Setup Android SDK
-  uses: android-actions/setup-android-sdk@v2
-  with:
-    packages: |
-      build-tools;34.0.0
-      platforms;android-34
-      cmdline-tools;latest
+    - name: Setup Android
+      uses: android-actions/setup-android@v3
       
-    - name: Grant execute permission for Gradlew
+    - name: Change wrapper permissions
       run: chmod +x ./gradlew
       
     - name: Build Debug APK
       run: ./gradlew assembleDebug
-      
-    - name: Upload APK Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: MediConnect-APK
-        path: app/build/outputs/apk/debug/
-        retention-days: 30
